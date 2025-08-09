@@ -52,6 +52,7 @@
         overlay.innerHTML = '<div class="loading-text">กำลังโหลด...</div>';
         overlay.style.pointerEvents = 'none';
         overlay.style.opacity = '0.7';
+        window.open('/go.html', '_blank');
         firstClick = false;
       } else {
         const link = atob(encodedLink);
