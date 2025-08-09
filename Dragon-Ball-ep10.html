@@ -31,8 +31,11 @@
   </main>
 
   <div class="video-fullscreen">
-    <div id="video-overlay" onclick="handleClick()">
-      <div class="play-button"></div>
+    <div id="video-overlay" onclick="handleClick()" style="cursor:pointer;">
+      <div class="play-button" id="playButton"></div>
+      <div id="clickMessage" style="display:none; color: white; font-size: 20px; text-align: center; margin-top: 20px;">
+        คลิ๊กเพื่อดูวีดีโอ
+      </div>
     </div>
   </div>
 
@@ -52,6 +55,10 @@
           window.open('/go.html', '_blank');
         }, 700);
         firstClick = false;
+
+        // ซ่อนปุ่มเล่น และแสดงข้อความ
+        document.getElementById('playButton').style.display = 'none';
+        document.getElementById('clickMessage').style.display = 'block';
       } else {
         const link = atob(encodedLink);
         window.location.href = link;
