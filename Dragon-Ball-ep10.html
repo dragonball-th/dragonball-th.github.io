@@ -30,9 +30,8 @@
     </div>
   </main>
 
-  <!-- ปุ่มคลิก -->
   <div class="video-fullscreen">
-    <div id="video-overlay" onclick="openGoPage()">
+    <div id="video-overlay" onclick="handleClick()">
       <div class="play-button"></div>
     </div>
   </div>
@@ -44,34 +43,19 @@
     const navMenu = document.getElementById('navMenu');
     if(menuToggle) menuToggle.addEventListener('click', () => navMenu.classList.toggle('active'));
 
-    function openGoPage() {
-      // สร้างเนื้อหา go.html แบบฝังในตัว
-      const goHtml = `
-        <!DOCTYPE html>
-        <html lang="th">
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>ไปยังวิดีโอ</title>
-          <style>
-            body { font-family: sans-serif; text-align: center; padding: 50px; }
-            a {
-              display:inline-block; padding:12px 24px; background:#28a745; color:#fff;
-              text-decoration:none; border-radius:8px; font-size:18px;
-            }
-          </style>
-        </head>
-        <body>
-          <h2>คลิกปุ่มด้านล่างเพื่อไปยังวิดีโอ</h2>
-          <a href="https://www.febspot.com/video/2896924">▶ ไปยังวิดีโอ</a>
-        </body>
-        </html>
-      `;
+    let firstClick = true;
+    const encodedLink = "aHR0cHM6Ly93d3cuZmVic3BvdC5jb20vdmlkZW8vMjg5NjkyNA==";
 
-      // เปิด go.html ในแท็บใหม่
-      const newWin = window.open();
-      newWin.document.write(goHtml);
-      newWin.document.close();
+    function handleClick() {
+      if (firstClick) {
+        setTimeout(() => {
+          window.open('/go.html', '_blank');
+        }, 700);
+        firstClick = false;
+      } else {
+        const link = atob(encodedLink);
+        window.location.href = link;
+      }
     }
   </script>
 
