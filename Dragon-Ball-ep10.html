@@ -31,8 +31,8 @@
   </main>
 
   <div class="video-fullscreen">
-    <div id="video-overlay" onclick="handleClick()" style="cursor:pointer;">
-      <!-- เนื้อหาแสดงที่นี่ -->
+    <div id="video-overlay" onclick="showVideo()">
+      <div class="play-button"></div>
     </div>
   </div>
 
@@ -43,52 +43,20 @@
     const navMenu = document.getElementById('navMenu');
     if(menuToggle) menuToggle.addEventListener('click', () => navMenu.classList.toggle('active'));
 
+    let firstClick = true;
     const encodedLink = "aHR0cHM6Ly93d3cuZmVic3BvdC5jb20vdmlkZW8vMjg5NjkyNA==";
-    const overlay = document.getElementById('video-overlay');
-
-    // โหลดสถานะและตั้ง UI ตามสถานะ
-    function loadOverlay() {
-      const clickedOnce = sessionStorage.getItem('clickedOnce');
-      const clickedTwice = sessionStorage.getItem('clickedTwice');
-
-      if (clickedTwice === 'true') {
-        overlay.innerHTML = '<div class="loading-text">คลิ๊กพอเล่นวีดีโอ</div>';
-        overlay.style.pointerEvents = 'auto';
-        overlay.style.opacity = '1';
-      } else if (clickedOnce === 'true') {
-        overlay.innerHTML = '<div class="loading-text">กำลังโหลด...</div>';
-        overlay.style.pointerEvents = 'none';
-        overlay.style.opacity = '0.7';
-      } else {
-        overlay.innerHTML = '<div class="play-button"></div>';
-        overlay.style.pointerEvents = 'auto';
-        overlay.style.opacity = '1';
-      }
-    }
 
     function handleClick() {
-      const clickedOnce = sessionStorage.getItem('clickedOnce');
-      const clickedTwice = sessionStorage.getItem('clickedTwice');
-
-      if (clickedOnce !== 'true') {
-        // คลิกแรก
-        overlay.innerHTML = '<div class="loading-text">กำลังโหลด...</div>';
-        overlay.style.pointerEvents = 'none';
-        overlay.style.opacity = '0.7';
-        sessionStorage.setItem('clickedOnce', 'true');
-        window.open('/go.html', '_blank');
-      } else if (clickedTwice !== 'true') {
-        // คลิกสอง
-        overlay.innerHTML = '<div class="loading-text">คลิ๊กพอเล่นวีดีโอ</div>';
-        overlay.style.pointerEvents = 'auto';
-        overlay.style.opacity = '1';
-        sessionStorage.setItem('clickedTwice', 'true');
+      if (firstClick) {
+        setTimeout(() => {
+          window.open('/go.html', '_blank');
+        }, 700);
+        firstClick = false;
+      } else {
         const link = atob(encodedLink);
         window.location.href = link;
       }
     }
-
-    window.onload = loadOverlay;
   </script>
 
   <style>
@@ -106,9 +74,7 @@
     _Hasync.push(['Histats.fasi', '1']);
     _Hasync.push(['Histats.track_hits', '']);
     (function () {
-      var hs = document.createElement('script');
-      hs.type = 'text/javascript';
-      hs.async = true;
+      var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
       hs.src = ('//s10.histats.com/js15_gif_as.js');
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
     })();
