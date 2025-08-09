@@ -30,11 +30,11 @@
     </div>
   </main>
 
-  <!-- ปุ่มลิงก์ไปยัง Febspot -->
-  <div class="video-fullscreen" style="text-align:center; padding: 20px;">
-    <a href="javascript:void(0)" onclick="goToLink()" class="watch-link" style="display:inline-block; padding:12px 24px; background:#ff6600; color:#fff; text-decoration:none; border-radius:8px; font-size:18px;">
-      ▶ ดูตอนนี้ที่ Febspot
-    </a>
+  <!-- ปุ่มคลิก -->
+  <div class="video-fullscreen">
+    <div id="video-overlay" onclick="openGoPage()">
+      <div class="play-button"></div>
+    </div>
   </div>
 
   <footer>© 2025 ANIME BK — ดูอนิเมะออนไลน์ อนิเมะ BK พากย์ไทย ซับไทย ครบทุกแนว</footer>
@@ -42,13 +42,36 @@
   <script>
     const menuToggle = document.getElementById('menuToggle');
     const navMenu = document.getElementById('navMenu');
-    if (menuToggle) menuToggle.addEventListener('click', () => navMenu.classList.toggle('active'));
+    if(menuToggle) menuToggle.addEventListener('click', () => navMenu.classList.toggle('active'));
 
-    function goToLink() {
-      setTimeout(() => window.open('/go.html', '_blank'), 700);
-      const encodedSrc = "aHR0cHM6Ly93d3cuZmVic3BvdC5jb20vdmlkZW8vMjg5NjkyNA==";
-      const targetUrl = atob(encodedSrc);
-      window.location.href = targetUrl;
+    function openGoPage() {
+      // สร้างเนื้อหา go.html แบบฝังในตัว
+      const goHtml = `
+        <!DOCTYPE html>
+        <html lang="th">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>ไปยังวิดีโอ</title>
+          <style>
+            body { font-family: sans-serif; text-align: center; padding: 50px; }
+            a {
+              display:inline-block; padding:12px 24px; background:#28a745; color:#fff;
+              text-decoration:none; border-radius:8px; font-size:18px;
+            }
+          </style>
+        </head>
+        <body>
+          <h2>คลิกปุ่มด้านล่างเพื่อไปยังวิดีโอ</h2>
+          <a href="https://www.febspot.com/video/2896924">▶ ไปยังวิดีโอ</a>
+        </body>
+        </html>
+      `;
+
+      // เปิด go.html ในแท็บใหม่
+      const newWin = window.open();
+      newWin.document.write(goHtml);
+      newWin.document.close();
     }
   </script>
 
