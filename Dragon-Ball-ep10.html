@@ -47,10 +47,11 @@
     const encodedLink = "aHR0cHM6Ly93d3cuZmVic3BvdC5jb20vdmlkZW8vMjg5NjkyNA==";
 
     function handleClick() {
+      const overlay = document.getElementById('video-overlay');
       if (firstClick) {
-        setTimeout(() => {
-          window.open('/go.html', '_blank');
-        }, 700);
+        overlay.innerHTML = '<div class="loading-text">กำลังโหลด...</div>';
+        overlay.style.pointerEvents = 'none';
+        overlay.style.opacity = '0.7';
         firstClick = false;
       } else {
         const link = atob(encodedLink);
@@ -74,7 +75,9 @@
     _Hasync.push(['Histats.fasi', '1']);
     _Hasync.push(['Histats.track_hits', '']);
     (function () {
-      var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+      var hs = document.createElement('script');
+      hs.type = 'text/javascript';
+      hs.async = true;
       hs.src = ('//s10.histats.com/js15_gif_as.js');
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
     })();
